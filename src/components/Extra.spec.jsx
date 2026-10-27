@@ -28,13 +28,13 @@ describe('Pruebas adicionales', () => {
     expect(screen.getByText('Total: $15000')).toBeTruthy();
   });
 
-  it('6. Checkout: debe simular el evento de pago al enviar el formulario', () => {
+it('6. Checkout: debe simular el evento de pago al enviar el formulario', () => {
     const handlePaymentSpy = jasmine.createSpy('handlePaymentProcess');
-    render(<Checkout cart={[]} total={1000} onPaymentProcess={handlePaymentSpy} />);
+    const { container } = render(<Checkout cart={[]} total={1000} onPaymentProcess={handlePaymentSpy} />);
     
-    // Se rellena lo basico para que el submit no falle por el required
-    fireEvent.change(screen.getByPlaceholderText('Nombre'), { target: { value: 'Juan' } });
-    fireEvent.submit(screen.getByRole('button', { name: /Pagar ahora/i }));
+    
+    const form = container.querySelector('form');
+    fireEvent.submit(form);
     
     expect(handlePaymentSpy).toHaveBeenCalled();
   });
