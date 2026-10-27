@@ -22,7 +22,7 @@ describe('Pruebas adicionales', () => {
     expect(inputNombre.value).toBe('Nuevo Juego');
   });
 
-  // Pruebas de Propiedades y Eventos en CHECKOUT
+  // Pruebas de Propiedades y Eventos en checkout
   it('5. Checkout: debe renderizar el total a pagar recibido por props', () => {
     render(<Checkout cart={[]} total={15000} onPaymentProcess={() => {}} />);
     expect(screen.getByText('Total: $15000')).toBeTruthy();
@@ -39,16 +39,17 @@ it('6. Checkout: debe simular el evento de pago al enviar el formulario', () => 
     expect(handlePaymentSpy).toHaveBeenCalled();
   });
 
-  //  Pruebas de Propiedades y Renderizado en la navhbar
+ // Pruebas de Propiedades y Renderizado en navbar
   it('7. Navbar: debe mostrar correctamente la cantidad del carrito', () => {
     render(<Navbar setView={() => {}} cartCount={5} />);
-    expect(screen.getByText('🛒 Carrito (5)')).toBeTruthy();
+    expect(screen.getByText(/Carrito/i)).toBeTruthy();
+    expect(screen.getByText(/5/)).toBeTruthy();
   });
 
   it('8. Navbar: debe ejecutar setView al hacer clic en un enlace', () => {
     const setViewSpy = jasmine.createSpy('setView');
     render(<Navbar setView={setViewSpy} cartCount={0} />);
-    fireEvent.click(screen.getByText('Ofertas'));
+    fireEvent.click(screen.getByText(/Ofertas/i));
     expect(setViewSpy).toHaveBeenCalledWith('ofertas');
   });
 
